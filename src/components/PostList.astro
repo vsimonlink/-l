@@ -1,0 +1,63 @@
+---
+import PostCard from "./PostCard.astro";
+import type { PostFrontmatter } from "../types";
+
+export interface Props {
+  posts: { data: PostFrontmatter; id: string }[];
+  tags?: string[];
+  currentTag?: string;
+}
+
+const { posts, tags, currentTag } = Astro.props;
+---
+
+<div class="post-list-wrapper">
+  {tags && tags.length > 0 && (
+    <div class="tag-filter" role="group" aria-label="标签筛选">
+      <a href="/posts" class={`tag-btn ${!currentTag ? "active" : ""}`}>全部</a>
+      {tags.map((tag) => (
+        <a href={`/posts?tag=${tag}`} class={`tag-btn ${currentTag === tag ? "active" : ""}`}>{tag}</a>
+      ))}
+    </div>
+  )}
+  <div class="post-list">
+    {posts.map((p) => <PostCard post={p} />)}
+  </div>
+  {posts.length === 0 && <p class="empty">暂无文章</p>}
+</div>
+
+<style>
+  .post-list-wrapper {
+    margin-top: var(--space-2xl);
+  }
+  .tag-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+  }
+  .tag-btn {
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    transition: all var(--transition-base);
+  }
+  .tag-btn.active,
+  .tag-btn:hover {
+    background: var(--color-accent);
+    color: var(--color-text-inverse);
+    border-color: var(--color-accent);
+  }
+  .post-list {
+    max-width: 800px;
+  }
+  .empty {
+    text-align: center;
+    color: var(--color-text-muted);
+    padding: var(--space-3xl);
+  }
+</style>

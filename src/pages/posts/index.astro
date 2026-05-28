@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostList from "../../components/PostList.astro";
+import { getPosts, getPostsByTag, getAllTags } from "../../utils/posts";
+
+const url = new URL(Astro.request.url);
+const tag = url.searchParams.get("tag") || undefined;
+const posts = tag ? await getPostsByTag(tag) : await getPosts();
+const tags = await getAllTags();
+---
+
+<BaseLayout title="文章">
+  <div class="container page-header">
+    <h1>文章</h1>
+    <p class="subtitle">技术分享与个人思考</p>
+  </div>
+  <div class="container">
+    <PostList posts={posts} tags={tags} currentTag={tag} />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    text-align: center;
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-2xl);
+  }
+  .page-header h1 {
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    margin-bottom: var(--space-sm);
+  }
+  .subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+  }
+</style>

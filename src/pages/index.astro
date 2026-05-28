@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import PostCard from "../components/PostCard.astro";
+import BackToTop from "../components/BackToTop.astro";
+import { getFeaturedProjects } from "../utils/projects";
+import { getPosts } from "../utils/posts";
+
+const featuredProjects = await getFeaturedProjects();
+const recentPosts = await getPosts(5);
+---
+
+<BaseLayout title="首页">
+  <Hero />
+  <section class="container section">
+    <h2 class="section-title">精选作品</h2>
+    {featuredProjects.length > 0 ? (
+      <div class="featured-grid">
+        {featuredProjects.map((p) => <ProjectCard project={p} />)}
+      </div>
+    ) : (
+      <p class="empty">精选作品即将上线</p>
+    )}
+    <div class="section-more">
+      <a href="/projects" class="more-link">查看全部作品 →</a>
+    </div>
+  </section>
+  <section class="container section">
+    <h2 class="section-title">最新文章</h2>
+    {recentPosts.length > 0 ? (
+      <div class="post-list-home">
+        {recentPosts.map((p) => <PostCard post={p} />)}
+      </div>
+    ) : (
+      <p class="empty">文章即将上线</p>
+    )}
+    <div class="section-more">
+      <a href="/posts" class="more-link">查看全部文章 →</a>
+    </div>
+  </section>
+  <BackToTop />
+</BaseLayout>
+
+<style>
+  .section {
+    margin-top: var(--space-3xl);
+  }
+  .section-title {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-xl);
+    text-align: center;
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .post-list-home {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .section-more {
+    text-align: center;
+    margin-top: var(--space-xl);
+  }
+  .more-link {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .more-link:hover {
+    text-decoration: underline;
+  }
+  .empty {
+    text-align: center;
+    color: var(--color-text-muted);
+    padding: var(--space-xl);
+  }
+  @media (max-width: 640px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

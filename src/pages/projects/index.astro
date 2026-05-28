@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectGrid from "../../components/ProjectGrid.astro";
+import { getProjects, getAllCategories } from "../../utils/projects";
+
+const url = new URL(Astro.request.url);
+const category = url.searchParams.get("category") || undefined;
+const projects = await getProjects(category);
+const categories = await getAllCategories();
+---
+
+<BaseLayout title="作品集">
+  <div class="container page-header">
+    <h1>作品集</h1>
+    <p class="subtitle">我的项目与作品展示</p>
+  </div>
+  <div class="container">
+    <ProjectGrid projects={projects} categories={categories} currentCategory={category} />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    text-align: center;
+    padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-2xl);
+  }
+  .page-header h1 {
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    margin-bottom: var(--space-sm);
+  }
+  .subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+  }
+</style>

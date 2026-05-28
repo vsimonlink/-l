@@ -1,0 +1,76 @@
+---
+import { themes } from "../utils/themes";
+---
+
+<script>
+  import { themes, defaultTheme, validateTheme } from "../utils/themes";
+
+  function getTheme(): string {
+    if (typeof document === "undefined") return defaultTheme;
+    const saved = localStorage.getItem("theme");
+    if (saved && themes.some((t) => t.id === saved)) return saved;
+    return defaultTheme;
+  }
+
+  function setTheme(id: string) {
+    document.documentElement.setAttribute("data-theme", id);
+    localStorage.setItem("theme", id);
+    const missing = validateTheme();
+    if (missing.length > 0) {
+      console.warn("Theme missing CSS vars, falling back to default:", missing);
+      document.documentElement.setAttribute("data-theme", defaultTheme);
+      localStorage.setItem("theme", defaultTheme);
+    }
+  }
+
+  function init() {
+    const theme = getTheme();
+    document.documentElement.setAttribute("data-theme", theme);
+    const select = document.getElementById("theme-select") as HTMLSelectElement;
+    if (select) {
+      select.value = theme;
+      select.addEventListener("change", (e) => {
+        setTheme((e.target as HTMLSelectElement).value);
+      });
+    }
+  }
+
+  document.addEventListener("astro:page-load", init);
+  init();
+</script>
+
+<label class="theme-switcher" aria-label="切换主题">
+  <span class="theme-label">主题</span>
+  <select id="theme-select">
+    {themes.map((t) => (
+      <option value={t.id}>{t.name}</option>
+    ))}
+  </select>
+</label>
+
+<style>
+  .theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .theme-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  select {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    color: var(--color-text-primary);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+  }
+  select:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+</style>

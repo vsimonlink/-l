@@ -1,0 +1,72 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+import type { ProjectFrontmatter } from "../types";
+
+export interface Props {
+  projects: { data: ProjectFrontmatter; id: string }[];
+  categories?: string[];
+  currentCategory?: string;
+}
+
+const { projects, categories, currentCategory } = Astro.props;
+---
+
+<div class="project-grid-wrapper">
+  {categories && categories.length > 0 && (
+    <div class="filter-bar" role="group" aria-label="作品分类筛选">
+      <a href="/projects" class={`filter-btn ${!currentCategory ? "active" : ""}`}>全部</a>
+      {categories.map((cat) => (
+        <a href={`/projects?category=${cat}`} class={`filter-btn ${currentCategory === cat ? "active" : ""}`}>{cat}</a>
+      ))}
+    </div>
+  )}
+  <div class="project-grid">
+    {projects.map((p) => <ProjectCard project={p} />)}
+  </div>
+  {projects.length === 0 && <p class="empty">暂无作品</p>}
+</div>
+
+<style>
+  .project-grid-wrapper {
+    margin-top: var(--space-2xl);
+  }
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    justify-content: center;
+  }
+  .filter-btn {
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    transition: all var(--transition-base);
+  }
+  .filter-btn.active,
+  .filter-btn:hover {
+    background: var(--color-accent);
+    color: var(--color-text-inverse);
+    border-color: var(--color-accent);
+  }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+  .empty {
+    text-align: center;
+    color: var(--color-text-muted);
+    padding: var(--space-3xl);
+  }
+  @media (max-width: 1024px) {
+    .project-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .project-grid { grid-template-columns: 1fr; }
+  }
+</style>

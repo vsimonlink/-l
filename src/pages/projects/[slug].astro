@@ -1,0 +1,181 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import GiscusComments from "../../components/GiscusComments.astro";
+import { getCollection } from "astro:content";
+import { getImageMeta } from "../../utils/image";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((p) => ({ params: { slug: p.id } }));
+}
+
+const { slug } = Astro.params;
+const projects = await getCollection("projects");
+const project = projects.find((p) => p.id === slug);
+if (!project) return Astro.redirect("/404");
+const { data } = project;
+
+let orientation = "landscape";
+let formatLabel = "";
+let imgWidth = 0;
+let imgHeight = 0;
+if (data.image) {
+  const imagePath = `public${data.image}`;
+  const meta = await getImageMeta(imagePath);
+  orientation = meta.orientation;
+  formatLabel = meta.format.format;
+  imgWidth = meta.width;
+  imgHeight = meta.height;
+}
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <article class="container project-detail">
+    <div class="page-header">
+      <a href="/projects" class="back-link">← 返回作品集</a>
+      <h1>{data.title}</h1>
+      <div class="meta">
+        <time datetime={data.date.toISOString()}>
+          {data.date.toLocaleDateString("zh-CN")}
+        </time>
+        {data.tags && data.tags.length > 0 && (
+          <span class="tags">
+            {data.tags.map((t: string) => <span class="tag">{t}</span>)}
+          </span>
+        )}
+      </div>
+    </div>
+    {data.image && (
+      <div class={`cover-image-wrapper orientation-${orientation}`}>
+        <img src={data.image} alt={data.title} class="cover-image" />
+        <span class="image-info">{formatLabel} · {imgWidth}×{imgHeight}</span>
+      </div>
+    )}
+    <div class="content">
+      {project.rendered?.html && <Fragment set:html={project.rendered.html} />}
+    </div>
+    <div class="project-links">
+      {data.link && <a href={data.link} target="_blank" rel="noopener noreferrer" class="btn-primary">在线演示</a>}
+      {data.repo && <a href={data.repo} target="_blank" rel="noopener noreferrer" class="btn-secondary">源代码</a>}
+    </div>
+    <GiscusComments category="Projects" />
+  </article>
+</BaseLayout>
+
+<style>
+  .project-detail {
+    max-width: 800px;
+    padding-top: calc(var(--header-height) + var(--space-2xl));
+    padding-bottom: var(--space-3xl);
+  }
+  .page-header {
+    margin-bottom: var(--space-xl);
+  }
+  .back-link {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    display: inline-block;
+    margin-bottom: var(--space-md);
+  }
+  .back-link:hover { color: var(--color-accent); }
+  .page-header h1 { font-size: var(--text-3xl); margin-bottom: var(--space-sm); }
+  .meta {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    flex-wrap: wrap;
+  }
+  .tags { display: flex; gap: var(--space-xs); flex-wrap: wrap; }
+  .tag {
+    font-size: var(--text-xs);
+    padding: 2px 8px;
+    background: var(--color-accent-muted);
+    color: var(--color-accent);
+    border-radius: var(--radius-full);
+  }
+  .cover-image-wrapper {
+    position: relative;
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-2xl);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cover-image {
+    width: 100%;
+    display: block;
+  }
+  .orientation-landscape .cover-image {
+    max-height: 500px;
+    object-fit: cover;
+  }
+  .orientation-portrait .cover-image {
+    max-height: 700px;
+    object-fit: contain;
+  }
+  .orientation-square .cover-image {
+    max-height: 500px;
+    object-fit: cover;
+  }
+  .image-info {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-size: 11px;
+    padding: 2px 8px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .content {
+    line-height: var(--line-height-base);
+    color: var(--color-text-primary);
+  }
+  .content :global(h2) { margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+  .content :global(p) { margin-bottom: var(--space-md); }
+  .content :global(ul) { list-style: disc; padding-left: var(--space-xl); margin-bottom: var(--space-md); }
+  .content :global(li) { margin-bottom: var(--space-xs); }
+  .content :global(code) {
+    background: var(--color-bg-secondary);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+  }
+  .content :global(pre) {
+    background: var(--color-bg-secondary);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin-bottom: var(--space-md);
+  }
+  .project-links {
+    display: flex;
+    gap: var(--space-md);
+    margin: var(--space-2xl) 0;
+  }
+  .btn-primary, .btn-secondary {
+    display: inline-flex;
+    padding: var(--space-sm) var(--space-xl);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all var(--transition-base);
+  }
+  .btn-primary {
+    background: var(--gradient-accent);
+    color: white;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--color-text-primary);
+  }
+  .btn-secondary:hover { background: var(--color-bg-hover); }
+</style>

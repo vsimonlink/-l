@@ -1,0 +1,41 @@
+<button class="back-to-top" id="back-to-top" aria-label="回到顶部">
+  ↑
+</button>
+
+<script>
+  const btn = document.getElementById("back-to-top")!;
+  window.addEventListener("scroll", () => {
+    btn.classList.toggle("visible", window.scrollY > 500);
+  });
+  btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+</script>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent);
+    color: var(--color-text-inverse);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--transition-base);
+    pointer-events: none;
+    z-index: 50;
+    box-shadow: var(--glass-shadow);
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .back-to-top:hover {
+    background: var(--color-accent-hover);
+  }
+</style>

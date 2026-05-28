@@ -1,0 +1,22 @@
+[data-theme="cyber"] {
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #0f0f0f;
+  --color-bg-card: rgba(20, 20, 20, 0.85);
+  --color-bg-hover: rgba(30, 30, 30, 0.95);
+  --color-text-primary: #e0ffe0;
+  --color-text-secondary: #80cc80;
+  --color-text-muted: #448844;
+  --color-text-inverse: #0a0a0a;
+  --color-accent: #00ff88;
+  --color-accent-hover: #00cc66;
+  --color-accent-muted: rgba(0, 255, 136, 0.12);
+  --color-border: rgba(0, 255, 136, 0.15);
+  --color-shadow: rgba(0, 255, 136, 0.1);
+  --glass-bg: rgba(10, 10, 10, 0.7);
+  --glass-border: rgba(0, 255, 136, 0.25);
+  --glass-blur: 12px;
+  --glass-shadow: 0 4px 24px rgba(0, 255, 136, 0.1);
+  --gradient-hero: linear-gradient(180deg, #0a0a0a 0%, #0d1a0d 50%, #0a0a0a 100%);
+  --gradient-card: linear-gradient(135deg, rgba(0,255,136,0.05), rgba(255,0,255,0.03));
+  --gradient-accent: linear-gradient(90deg, #00ff88, #ff00ff);
+}

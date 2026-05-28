@@ -1,0 +1,29 @@
+{
+  "basics": {
+    "name": "LINKWang",
+    "title": "Flutter / Android 开发者",
+    "summary": "热爱移动端开发，专注于 Flutter 跨平台应用开发，同时具备原生 Android 开发经验。",
+    "location": "中国",
+    "email": "your-email@example.com",
+    "skills": ["Flutter", "Dart", "Android", "Kotlin", "Java", "Git", "Firebase", "REST API"]
+  },
+  "experience": [
+    {
+      "company": "公司名称",
+      "position": "Flutter 开发工程师",
+      "startDate": "2023-01",
+      "endDate": "至今",
+      "description": "负责公司移动端应用的 Flutter 跨平台开发",
+      "highlights": ["主导 3 款 App 从零到上线的 Flutter 重写", "搭建 CI/CD 流水线"]
+    }
+  ],
+  "education": [
+    {
+      "school": "大学名称",
+      "degree": "本科",
+      "field": "计算机科学与技术",
+      "startDate": "2019-09",
+      "endDate": "2023-06"
+    }
+  ]
+}

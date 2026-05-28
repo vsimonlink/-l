@@ -1,0 +1,28 @@
+---
+export interface Props {
+  skills: string[];
+}
+
+const { skills } = Astro.props;
+---
+
+<div class="skill-tags">
+  {skills.map((skill) => <span class="skill-tag">{skill}</span>)}
+</div>
+
+<style>
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+  }
+  .skill-tag {
+    padding: var(--space-xs) var(--space-md);
+    background: var(--gradient-accent);
+    color: var(--color-text-inverse);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+</style>

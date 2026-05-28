@@ -1,0 +1,26 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: string;
+}
+
+const {
+  title,
+  description = "个人网站 - 作品集与博客",
+  image = "/images/og/default.png",
+  type = "website",
+} = Astro.props;
+
+const siteTitle = title.includes("个人网站") ? title : `${title} | 个人网站`;
+---
+
+<title>{siteTitle}</title>
+<meta name="description" content={description} />
+<meta property="og:title" content={siteTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.site).href} />
+<meta property="og:type" content={type} />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="sitemap" href="/sitemap.xml" />

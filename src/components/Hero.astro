@@ -1,0 +1,103 @@
+---
+import { siteConfig } from "../content/config";
+---
+
+<section class="hero">
+  <div class="hero-content">
+    <img
+      src={siteConfig.avatar}
+      alt={`${siteConfig.name} 的头像`}
+      class="hero-avatar"
+      width="120"
+      height="120"
+    />
+    <h1 class="hero-name">{siteConfig.name}</h1>
+    <p class="hero-bio">{siteConfig.bio}</p>
+    <div class="hero-social">
+      {siteConfig.social.github && (
+        <a href={siteConfig.social.github} class="hero-social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <span>GitHub</span>
+        </a>
+      )}
+      {siteConfig.social.email && (
+        <a href={`mailto:${siteConfig.social.email}`} class="hero-social-link" aria-label="邮箱">
+          <span>邮箱</span>
+        </a>
+      )}
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span>↓</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: var(--space-2xl);
+  }
+  .hero-content {
+    text-align: center;
+    max-width: 600px;
+  }
+  .hero-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    margin: 0 auto var(--space-xl);
+    border: 3px solid var(--glass-border);
+    object-fit: cover;
+    box-shadow: var(--glass-shadow);
+  }
+  .hero-name {
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    margin-bottom: var(--space-md);
+    color: var(--color-text-inverse);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  .hero-bio {
+    font-size: var(--text-xl);
+    color: var(--color-text-inverse);
+    opacity: 0.9;
+    margin-bottom: var(--space-xl);
+  }
+  .hero-social {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+  }
+  .hero-social-link {
+    display: inline-flex;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    color: var(--color-text-inverse);
+    text-decoration: none;
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    transition: transform var(--transition-base), background var(--transition-base);
+  }
+  .hero-social-link:hover {
+    transform: translateY(-2px);
+    background: var(--color-bg-hover);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: var(--space-xl);
+    font-size: 1.5rem;
+    color: var(--color-text-inverse);
+    opacity: 0.6;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+</style>

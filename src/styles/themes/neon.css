@@ -1,0 +1,22 @@
+[data-theme="neon"] {
+  --color-bg-primary: #0d0d1a;
+  --color-bg-secondary: #12122a;
+  --color-bg-card: rgba(30, 30, 60, 0.7);
+  --color-bg-hover: rgba(40, 40, 80, 0.9);
+  --color-text-primary: #f0e6ff;
+  --color-text-secondary: #c4b5e0;
+  --color-text-muted: #9285b5;
+  --color-text-inverse: #0d0d1a;
+  --color-accent: #f093fb;
+  --color-accent-hover: #e070ea;
+  --color-accent-muted: rgba(240, 147, 251, 0.15);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-shadow: rgba(240, 147, 251, 0.15);
+  --glass-bg: rgba(20, 20, 50, 0.5);
+  --glass-border: rgba(240, 147, 251, 0.2);
+  --glass-blur: 24px;
+  --glass-shadow: 0 8px 32px rgba(240, 147, 251, 0.15);
+  --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 35%, #f093fb 70%, #f5576c 100%);
+  --gradient-card: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(240, 147, 251, 0.1));
+  --gradient-accent: linear-gradient(135deg, #f093fb, #667eea);
+}

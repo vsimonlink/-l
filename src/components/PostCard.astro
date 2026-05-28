@@ -1,0 +1,70 @@
+---
+import type { PostFrontmatter } from "../types";
+
+export interface Props {
+  post: {
+    data: PostFrontmatter;
+    id: string;
+  };
+}
+
+const { post } = Astro.props;
+const { data, id } = post;
+---
+
+<article class="post-card glass-card">
+  <time class="post-date" datetime={data.date.toISOString()}>
+    {data.date.toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric" })}
+  </time>
+  <h3 class="post-title">
+    <a href={`/posts/${id}`}>{data.title}</a>
+  </h3>
+  {data.description && <p class="post-desc">{data.description}</p>}
+  {data.tags && data.tags.length > 0 && (
+    <div class="post-tags">
+      {data.tags.map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+  )}
+</article>
+
+<style>
+  .post-card {
+    margin-bottom: var(--space-lg);
+    transition: transform var(--transition-base);
+  }
+  .post-card:hover {
+    transform: translateX(4px);
+  }
+  .post-date {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  .post-title {
+    margin: var(--space-xs) 0;
+  }
+  .post-title a {
+    text-decoration: none;
+    color: var(--color-text-primary);
+    transition: color var(--transition-base);
+  }
+  .post-title a:hover {
+    color: var(--color-accent);
+  }
+  .post-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+  .tag {
+    font-size: var(--text-xs);
+    padding: 2px 8px;
+    background: var(--color-accent-muted);
+    color: var(--color-accent);
+    border-radius: var(--radius-full);
+  }
+</style>

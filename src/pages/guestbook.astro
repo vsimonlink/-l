@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import GiscusComments from "../components/GiscusComments.astro";
+---
+
+<BaseLayout title="留言板">
+  <div class="container guestbook-page">
+    <div class="page-header">
+      <h1>留言板</h1>
+      <p class="subtitle">欢迎留言交流，需要 GitHub 账号登录</p>
+    </div>
+    <GiscusComments category="Guestbook" />
+  </div>
+</BaseLayout>
+
+<style>
+  .guestbook-page {
+    max-width: 800px;
+    padding-top: calc(var(--header-height) + var(--space-3xl));
+    padding-bottom: var(--space-3xl);
+  }
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+  .page-header h1 {
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    margin-bottom: var(--space-sm);
+  }
+  .subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+  }
+</style>
