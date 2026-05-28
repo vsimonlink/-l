@@ -26,3 +26,9 @@ dist/
 
 # Superpowers
 .superpowers/
+
+# Vercel
+.vercel/
+
+# Logs
+*.log
