@@ -1,4 +1,3 @@
-import sharp from "sharp";
 import path from "path";
 
 export type Orientation = "portrait" | "landscape" | "square";
@@ -71,6 +70,7 @@ function getOrientation(width: number, height: number): Orientation {
 
 export async function getImageMeta(filePath: string): Promise<ImageMeta> {
   try {
+    const sharp = (await import("sharp")).default;
     const meta = await sharp(filePath).metadata();
     const width = meta.width ?? 0;
     const height = meta.height ?? 0;
