@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://vsimonlink.github.io',
-  base: '/-l/',
+  base: process.env.CF_PAGES === '1' ? '/' : '/-l/',
   integrations: [mdx(), sitemap()],
   markdown: {
     syntaxHighlight: 'prism',
