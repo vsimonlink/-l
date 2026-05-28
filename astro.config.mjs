@@ -5,7 +5,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://your-website.vercel.app',
+  site: 'https://vsimonlink.github.io',
+  base: '/-l',
   integrations: [mdx(), sitemap()],
   markdown: {
     syntaxHighlight: 'prism',
