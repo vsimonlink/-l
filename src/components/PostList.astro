@@ -2,6 +2,8 @@
 import PostCard from "./PostCard.astro";
 import type { PostFrontmatter } from "../types";
 
+const base = import.meta.env.BASE_URL;
+
 export interface Props {
   posts: { data: PostFrontmatter; id: string }[];
   tags?: string[];
@@ -14,9 +16,9 @@ const { posts, tags, currentTag } = Astro.props;
 <div class="post-list-wrapper">
   {tags && tags.length > 0 && (
     <div class="tag-filter" role="group" aria-label="标签筛选">
-      <a href="/posts" class={`tag-btn ${!currentTag ? "active" : ""}`}>全部</a>
+      <a href={`${base}posts`} class={`tag-btn ${!currentTag ? "active" : ""}`}>全部</a>
       {tags.map((tag) => (
-        <a href={`/posts?tag=${tag}`} class={`tag-btn ${currentTag === tag ? "active" : ""}`}>{tag}</a>
+        <a href={`${base}posts?tag=${tag}`} class={`tag-btn ${currentTag === tag ? "active" : ""}`}>{tag}</a>
       ))}
     </div>
   )}

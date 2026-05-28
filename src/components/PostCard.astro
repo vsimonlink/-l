@@ -1,6 +1,8 @@
 ---
 import type { PostFrontmatter } from "../types";
 
+const base = import.meta.env.BASE_URL;
+
 export interface Props {
   post: {
     data: PostFrontmatter;
@@ -17,7 +19,7 @@ const { data, id } = post;
     {data.date.toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric" })}
   </time>
   <h3 class="post-title">
-    <a href={`/posts/${id}`}>{data.title}</a>
+    <a href={`${base}posts/${id}`}>{data.title}</a>
   </h3>
   {data.description && <p class="post-desc">{data.description}</p>}
   {data.tags && data.tags.length > 0 && (

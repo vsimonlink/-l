@@ -7,6 +7,8 @@ import BackToTop from "../components/BackToTop.astro";
 import { getFeaturedProjects } from "../utils/projects";
 import { getPosts } from "../utils/posts";
 
+const base = import.meta.env.BASE_URL;
+
 const featuredProjects = await getFeaturedProjects();
 const recentPosts = await getPosts(5);
 ---
@@ -23,7 +25,7 @@ const recentPosts = await getPosts(5);
       <p class="empty">精选作品即将上线</p>
     )}
     <div class="section-more">
-      <a href="/projects" class="more-link">查看全部作品 →</a>
+      <a href={`${base}projects`} class="more-link">查看全部作品 →</a>
     </div>
   </section>
   <section class="container section">
@@ -36,7 +38,7 @@ const recentPosts = await getPosts(5);
       <p class="empty">文章即将上线</p>
     )}
     <div class="section-more">
-      <a href="/posts" class="more-link">查看全部文章 →</a>
+      <a href={`${base}posts`} class="more-link">查看全部文章 →</a>
     </div>
   </section>
   <BackToTop />
