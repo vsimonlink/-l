@@ -44,14 +44,14 @@ const next = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
       </div>
     </div>
     {data.image && (
-      <img src={data.image} alt={data.title} class="cover-image" />
+      <img src={base + data.image.slice(1)} alt={data.title} class="cover-image" />
     )}
     <div class="content">
       {post.rendered?.html && <Fragment set:html={post.rendered.html} />}
     </div>
     <nav class="post-nav" aria-label="文章导航">
-      {prev && <a href={`/posts/${prev.id}`} class="nav-prev">← {prev.data.title}</a>}
-      {next && <a href={`/posts/${next.id}`} class="nav-next">{next.data.title} →</a>}
+      {prev && <a href={`${base}posts/${prev.id}`} class="nav-prev">← {prev.data.title}</a>}
+      {next && <a href={`${base}posts/${next.id}`} class="nav-next">{next.data.title} →</a>}
     </nav>
     <GiscusComments category="Posts" />
   </article>

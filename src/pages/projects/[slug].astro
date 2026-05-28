@@ -49,7 +49,7 @@ if (data.image) {
     </div>
     {data.image && (
       <div class={`cover-image-wrapper orientation-${orientation}`}>
-        <img src={data.image} alt={data.title} class="cover-image" />
+        <img src={base + data.image.slice(1)} alt={data.title} class="cover-image" />
         <span class="image-info">{formatLabel} · {imgWidth}×{imgHeight}</span>
       </div>
     )}
